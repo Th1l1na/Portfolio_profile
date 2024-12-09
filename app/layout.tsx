@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { ThemeProvider } from "./provider";
+import { ThemeProvider } from "@/components/theme-provider"
+
+interface RootLayoutProps {
+  children: React.ReactNode;
+}
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -19,23 +23,22 @@ export const metadata: Metadata = {
   description: "data science enthusies",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
-      <body>
+    <>
+      <html lang="en" suppressHydrationWarning>
+        <head />
+        <body>
           <ThemeProvider
             attribute="class"
-            defaultTheme="system"
+            defaultTheme="dark"
             enableSystem
             disableTransitionOnChange
           >
             {children}
           </ThemeProvider>
         </body>
-    </html>
-  );
+      </html>
+    </>
+  )
 }
